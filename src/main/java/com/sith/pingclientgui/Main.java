@@ -143,10 +143,10 @@ public class Main extends Application {
         Text text = new Text("Board (*)");
 
         boardsDropDown = new ComboBox<>();
-        String[] boards = receiveBoards();
+        Board[] boards = receiveBoards();
         if(boards!=null) {
-            for(String board: boards) {
-                boardsDropDown.getItems().add(board);
+            for (Board board : boards) {
+                boardsDropDown.getItems().add(board.getName());
             }
         }
         else {
@@ -281,7 +281,7 @@ public class Main extends Application {
         System.out.println(postResponse.body());
     }
 
-    public String[] receiveBoards() throws Exception {
+    public Board[] receiveBoards() throws Exception {
         HttpRequest getBoardRequest = HttpRequest.newBuilder()
                 .uri(new URI("https://ping.qwq.sh/boards"))
                 .header("Content-Type", "application/json")
@@ -299,9 +299,9 @@ public class Main extends Application {
 
         Gson gson = new Gson();
 
-        if((gson.fromJson(getResponse.body(), String[].class)==null)) return null;
+        if((gson.fromJson(getResponse.body(), Board[].class)==null)) return null;
 
-        return gson.fromJson(getResponse.body(), String[].class);
+        return gson.fromJson(getResponse.body(), Board[].class);
     }
 
 
